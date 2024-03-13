@@ -130,6 +130,14 @@ printf " \033[0;32m$\033[0m "
 read ri_messagestr
 echo
 
+printf "\033[0;34mis breaking?\033[0m [y/N] "
+read -N1 ri_is_breaking
+printf "\n\n"
+
+#if the commit is a breaking one, it will change the jq command to add a ! at the end of the name
+[ "${ri_is_breaking}" = "y" ] || [ "${ri_is_breaking}" = "Y" ] &&
+	jqcmd_gen_prefix_msg="${jqcmd_gen_prefix_msg} + \"!\""
+
 [ -z "${ri_messagestr}" ] &&  #exit the user doesn't specify any commit message
 	exit
 
