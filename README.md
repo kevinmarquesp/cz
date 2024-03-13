@@ -2,7 +2,7 @@
 For a long time I used the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) pattern to write my commit messages, and when I head of the [`cz-cli`](https://github.com/commitizen/cz-cli) and [`cz-emoji`](https://github.com/ngryman/cz-emoji) command line utilities I've installed them in that same moment. But the fact that these programs is written in JavaScript and depends on a Node packager manager (`npm`, `pnpm` or `yarn`) always annoyed me – yeah, I know that this make the project cross platform, but I really don't care, just makes the project difficult to setup in multiple OSes. So, I made my own Bash script for that. Hope it's helpful for you :heart:.
 ## Documentation
 Before anything, this project is meant to run only in Unix systems. So, if you're a Windows user, I recommend you to use WSL or ask Chat-GPT to convert the main file (`cz.sh`) to a `.ps1` one and drag that to your path. Anyway…
-### Installation Process
+### Installation/Update
 As you already know, this tool was written using Bash script, so you need to have, at least, bash installed in your system. Along side that, you will need the `base` package (in Arch Linux) to have access to the `sed` command and other tools that I'll assume that's already installed on you distribution.
 
 **Dependencies list**:
