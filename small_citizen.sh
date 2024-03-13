@@ -27,9 +27,36 @@ do
 
 		"-h" | "--help")
 			echo
-			echo "${BASH_SOURCE} - v0.3.0"
+			echo "${BASH_SOURCE} - v0.4.0"
 			echo
-			echo ""
+			echo "I was anoyed that the cz-emoji tool was written in Javascript"
+			echo "and depends on NPM, PNPM or whatever you use to manage your node"
+			echo "packages, so I made my own commit cittizen script with emoji"
+			echo "support using only bash and some system utilities. Feel free"
+			echo "to contribute at https://github.com/kevinmarquesp/committizen_emoji_sh"
+			echo
+			echo "Command Options:"
+			echo "  -h --help         Displays this help message."
+			echo "  -a --ammend       Ammends the commit to the last one"
+			echo "  -d --description  Ask for a longer description after commit"
+			echo "  -j --json [PATH]  Path to the types.json file with the commit types."
+			echo "                      (Current setted as ${types_json})"
+			echo
+			echo "Context Prompt:"
+			echo "  A helper information that helps the developer know what the"
+			echo "  commit message is related to. Could be a file name or a custom"
+			echo "  tag, for an example."
+			echo
+			echo "Commit Prompt:"
+			echo "  The commit message (duh) that git will use to commit the current"
+			echo "  changes. It's recommended that this message has less than 80"
+			echo "  characters length, you need to be specific."
+			echo
+			echo "Description Prompt:  (optional)"
+			echo "  If you've setted the -d or --description flag on the command"
+			echo "  this script will ask for another message to put in the commit"
+			echo "  body. Use this to detail what this changes does and warnings."
+			echo
 			exit
 		;;
 
