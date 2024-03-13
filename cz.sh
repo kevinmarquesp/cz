@@ -4,8 +4,8 @@
 ## 	For this application, the arguments should'b be so flexible, because it has
 ##  a specific propurse. No need to put too much arguments
 
-OPTIONS="h,a,d,j:N"
-LONG_OPTIONS="help,ammend,description,json:,no-display-emoji"
+OPTIONS="h,a,d,j:Nn"
+LONG_OPTIONS="help,ammend,description,json:,no-display-emoji,no-emoji"
 
 eval -- set -- $(getopt --name "${BASH_SOURCE}" --options "${OPTIONS}" \
 						--longoptions "${LONG_OPTIONS}" -- "${@}")
@@ -79,6 +79,11 @@ do
 		"-N" | "--no-display-emoji")
 			jqcmd_build_fzf_table='.[] | .name+"|"+.description'
 			jqcmd_display_selected='"\n" + .name + ": " + .description + "\n"'
+			shift
+		;;
+
+		"-n" | "--no-emoji")
+			jqcmd_gen_prefix_msg='.name'
 			shift
 		;;
 
