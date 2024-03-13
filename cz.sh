@@ -23,8 +23,6 @@ types_json="${HOME}/.local/share/committizen_emoji_sh/types.json"
 while true
 do
 	case "${1}" in
-		#todo: write a good help command
-
 		"-h" | "--help")
 			echo
 			echo "${BASH_SOURCE} - v1.4.0"
