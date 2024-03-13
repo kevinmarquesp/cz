@@ -16,17 +16,36 @@ unset OPTIONS LONG_OPTIONS
 ##  is bolean variables that the script will use to know how to build the git
 ##  commit command
 
+is_ammend=0
+is_description=0
+types_json="${HOME}/.local/share/committizen_emoji_sh/types.json"
+
 while true
 do
-	case "$1" in
+	case "${1}" in
 		#todo: write a good help command
 
 		"-h" | "--help")
 			echo
-			echo "${BASH_SOURCE} - v0.2.0"
+			echo "${BASH_SOURCE} - v0.3.0"
 			echo
 			echo ""
 			exit
+		;;
+
+		"-a" | "--amend")
+			is_ammend=1
+			shift
+		;;
+
+		"-d" | "--description")
+			is_description=1
+			shift
+		;;
+
+		"-j" | "--json")
+			types_json="${2}"
+			shift 2
 		;;
 
 		"--")
