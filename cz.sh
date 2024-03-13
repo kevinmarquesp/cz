@@ -28,7 +28,7 @@ do
 	case "${1}" in
 		"-h" | "--help")
 			echo
-			echo "${BASH_SOURCE} - v2.8.1"
+			echo "${BASH_SOURCE} - v2.8.2"
 			echo
 			echo "I was anoyed that the cz-emoji tool was written in Javascript"
 			echo "and depends on NPM, PNPM or whatever you use to manage your node"
@@ -112,6 +112,12 @@ set -e
 [ -e "${HOME}/.bashrc" ] && . "${HOME}/.bashrc"
 [ -e "${HOME}/.bash_aliases" ] && . "${HOME}/.bash_aliases"
 [ -e "${HOME}/.aliasrc" ] && . "${HOME}/.aliasrc"
+
+if [ ! -e "${types_json}" ]
+then
+	printf "\n\033[0;31m[ERROR]\033[0m Could not find %s\n\n" "${types_json}"
+	exit 1
+fi
 
 type_idx=$(jq "${jqcmd_build_fzf_table}" "${types_json}" |
 	nl -v 0 |
