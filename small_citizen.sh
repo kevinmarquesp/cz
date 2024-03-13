@@ -27,7 +27,7 @@ do
 
 		"-h" | "--help")
 			echo
-			echo "${BASH_SOURCE} - v0.4.0"
+			echo "${BASH_SOURCE} - v1.4.0"
 			echo
 			echo "I was anoyed that the cz-emoji tool was written in Javascript"
 			echo "and depends on NPM, PNPM or whatever you use to manage your node"
@@ -80,3 +80,69 @@ do
 		;;
 	esac
 done
+
+## SCRIPT BODY
+##  For stylish propurses, it should try to import the user's aliases, then
+##  start the proces: Use fzf + jq to prompt the user, then ask for the message
+##  description strings. At the end, construct a commit command string and
+##  execute that!
+
+shopt -s expand_aliases
+set -e
+
+[ -e "${HOME}/.bashrc" ] && . "${HOME}/.bashrc"
+[ -e "${HOME}/.bash_aliases" ] && . "${HOME}/.bash_aliases"
+[ -e "${HOME}/.aliasrc" ] && . "${HOME}/.aliasrc"
+
+type_idx=$(jq '.[] | .emoji+"|"+.name+"|"+.description' "${types_json}" |
+	nl -v 0 |
+	column -ts "|" |  #convert the lines into a text table
+	fzf |
+	sed 's/^ *\([0-9]*\).*$/\1/')  #remove everything, but the index numbers
+
+[ -z "${type_idx}" ] &&  #exit if any type was selected
+	exit
+
+#this line just display the selected type, just to help the user identify his/her choices...
+printf "\033[0;33m%s\033[0m\n\n" \
+	"$(jq -r ".[${type_idx}] | \"\n\" + .emoji + \" \" + .name + \": \" + .description + \"\n\"" "${types_json}")"
+
+printf "context: \033[0;36myour commit message is related to what?\n"
+printf " \033[0;32m$\033[0m "
+read ri_contextstr
+echo
+
+printf "mmessage: \033[0;32m******************************************************\033[0;33m***************\033[0;31m*****\n"
+printf " \033[0;32m$\033[0m "
+read ri_messagestr
+echo
+
+[ -z "${ri_messagestr}" ] &&  #exit the user doesn't specify any commit message
+	exit
+
+if [ $is_description = 1 ]
+then
+	printf "description: \033[0;36mchange details, explain what this commit does better\n"
+	printf " \033[0;32m$\033[0m "
+	read ri_descriptionstr
+	echo
+fi
+
+description_opt=""
+ammend_opt=""
+context_part=":"
+prefix_part=$(jq -r ".[${type_idx}] | .code+\" \"+.name" "${types_json}")
+
+#build the commit options and parts based on the input strings and/or user options
+[ -n "${ri_descriptionstr}" ] &&
+	description_opt="-m '${ri_descriptionstr}'"
+[ $is_ammend = 1 ] &&
+	ammend_opt="--amend"
+[ -n "${ri_contextstr}" ] &&
+	context_part=" (${ri_contextstr}):"
+
+commit_cmd="git commit ${ammend_opt} '${prefix_part}${context_part} ${ri_messagestr}' ${description_opt}"
+
+#display the command string and then execute it
+printf "\033[0;30m${commit_cmd}\033[0m\n\n"
+eval "${commit_cmd}"
