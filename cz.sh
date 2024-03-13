@@ -154,7 +154,7 @@ prefix_part=$(jq -r ".[${type_idx}] | ${jqcmd_gen_prefix_msg}" "${types_json}")
 [ -n "${ri_contextstr}" ] &&
 	context_part=" (${ri_contextstr}):"
 
-commit_cmd="git commit ${ammend_opt} '${prefix_part}${context_part} ${ri_messagestr}' ${description_opt}"
+commit_cmd="git commit ${ammend_opt} -m '${prefix_part}${context_part} ${ri_messagestr}' ${description_opt}"
 
 #display the command string and then execute it
 printf "\033[0;30m${commit_cmd}\033[0m\n\n"
