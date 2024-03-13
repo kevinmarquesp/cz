@@ -28,7 +28,7 @@ do
 	case "${1}" in
 		"-h" | "--help")
 			echo
-			echo "${BASH_SOURCE} - v1.4.0"
+			echo "${BASH_SOURCE} - v2.7.1"
 			echo
 			echo "I was anoyed that the cz-emoji tool was written in Javascript"
 			echo "and depends on NPM, PNPM or whatever you use to manage your node"
