@@ -34,6 +34,9 @@ If you used the `-d` or `--description` flag, you'll get another prompt, but thi
 You can always edit the `types.json` in `~/.local/share/committizen_emoji_sh/types.json` to have custom types. But if you're in a project that has a specific convention you can set a custom commit types JSON file with the options `-j` or `--json`. 
 
 Use `cz --help` for more information.
+
+> [!TIP]
+> If you have a custom alias for your `fzf` command like I do, this script will push that before running the `fzf` command. So you can expect a customized good looking `fzf` prompt!
 ## Development & Contribution
 ### TODO
 - [ ] Verify if the JSON path exists before opening the `fzf` prompt.
