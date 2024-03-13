@@ -28,7 +28,7 @@ do
 	case "${1}" in
 		"-h" | "--help")
 			echo
-			echo "${BASH_SOURCE} - v2.7.1"
+			echo "${BASH_SOURCE} - v2.8.1"
 			echo
 			echo "I was anoyed that the cz-emoji tool was written in Javascript"
 			echo "and depends on NPM, PNPM or whatever you use to manage your node"
@@ -37,11 +37,13 @@ do
 			echo "to contribute at https://github.com/kevinmarquesp/committizen_emoji_sh"
 			echo
 			echo "Command Options:"
-			echo "  -h --help         Displays this help message."
-			echo "  -a --ammend       Ammends the commit to the last one"
-			echo "  -d --description  Ask for a longer description after commit"
-			echo "  -j --json [PATH]  Path to the types.json file with the commit types."
-			echo "                      (Current setted as ${types_json})"
+			echo "  -h --help              Displays this help message."
+			echo "  -a --ammend            Ammends the commit to the last one"
+			echo "  -d --description       Ask for a longer description after commit"
+			echo "  -j --json [PATH]       Path to the types.json file with the commit types."
+			echo "                           (Current setted as ${types_json})"
+			echo "  -n --no-emoji          Disable the emoji character on the commit message."
+			echo "  -n --no-display-emoji  Will not display emoji the prompts anywhere."
 			echo
 			echo "Context Prompt:"
 			echo "  A helper information that helps the developer know what the"
@@ -52,6 +54,11 @@ do
 			echo "  The commit message (duh) that git will use to commit the current"
 			echo "  changes. It's recommended that this message has less than 80"
 			echo "  characters length, you need to be specific."
+			echo
+			echo "Breaking Prompt:"
+			echo "  Will put a '!' character after the name of the commit type."
+			echo "  Use if the project doens't compile/work at the moment you're"
+			echo "  commiting your changes."
 			echo
 			echo "Description Prompt:  (optional)"
 			echo "  If you've setted the -d or --description flag on the command"
