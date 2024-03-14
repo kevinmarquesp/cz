@@ -46,7 +46,7 @@ Use `cz --help` for more information.
 > If you have a custom alias for your `fzf` command like I do, this script will push that before running the `fzf` command. So you can expect a customized good looking `fzf` prompt!
 ## Development & Contribution
 ### TODO
-- [ ] Verify if the JSON path exists before opening the `fzf` prompt.
+- [x] Verify if the JSON path exists before opening the `fzf` prompt.
 - [x] Add a *no display emoji* option, for terminal emulators that doesn't support that.
 - [x] Add a *no emoji* option; not anyone likes cute little emojis on their commit messages.
 - [x] Add a *breaking change* prompt that will just add a `!` after the commit name;
