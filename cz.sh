@@ -28,7 +28,7 @@ do
 	case "${1}" in
 		"-h" | "--help")
 			echo
-			echo "${BASH_SOURCE} - v2.8.2"
+			echo "${BASH_SOURCE} - v2.8.4"
 			echo
 			echo "I was anoyed that the cz-emoji tool was written in Javascript"
 			echo "and depends on NPM, PNPM or whatever you use to manage your node"
@@ -169,14 +169,14 @@ prefix_part=$(jq -r ".[${type_idx}] | ${jqcmd_gen_prefix_msg}" "${types_json}")
 
 #build the commit options and parts based on the input strings and/or user options
 [ -n "${ri_descriptionstr}" ] &&
-	description_opt="-m '${ri_descriptionstr}'"
-[ $is_ammend = 1 ] &&
+	description_msg="${ri_descriptionstr}"
+[ ${is_ammend} = 1 ] &&
 	ammend_opt="--amend"
 [ -n "${ri_contextstr}" ] &&
 	context_part=" (${ri_contextstr}):"
 
-commit_cmd="git commit ${ammend_opt} -m '${prefix_part}${context_part} ${ri_messagestr}' ${description_opt}"
+commit_msg="${prefix_part}${context_part} ${ri_messagestr}"
 
-#display the command string and then execute it
-printf "\033[0;30m${commit_cmd}\033[0m\n\n"
-eval "${commit_cmd}"
+[ ${is_description} = 1 ] &&
+	git commit ${ammend_opt} -m "${commit_msg}" -m "${description_msg}" ||
+	git commit ${ammend_opt} -m "${commit_msg}"
