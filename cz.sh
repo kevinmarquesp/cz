@@ -29,30 +29,30 @@ while true; do
     echo
     echo "${BASH_SOURCE[0]} - v2.9.6"
     echo
-    echo "I was anoyed that the cz-emoji tool was written in Javascript"
-    echo "and depends on NPM, PNPM or whatever you use to manage your node"
-    echo "packages, so I made my own commit cittizen script with emoji"
+    echo "I was anoyed that the cz-emoji tool was written in JavaScript"
+    echo "and depends on NPM, PNPM or whatever you use to manage your Node"
+    echo "packages, so I made my own commit-cittizen script with emoji"
     echo "support using only bash and some system utilities. Feel free"
     echo "to contribute at https://github.com/kevinmarquesp/cz"
     echo
     echo "Command Options:"
     echo "  -h --help              Displays this help message."
-    echo "  -a --ammend            Ammends the commit to the last one"
-    echo "  -d --description       Ask for a longer description after commit"
+    echo "  -a --ammend            Ammends the commit to the last one."
+    echo "  -d --description       Ask for a longer description after the commit message."
     echo "  -j --json [PATH]       Path to the types.json file with the commit types."
     echo "                           (Current setted as ${types_json})"
     echo "  -n --no-emoji          Disable the emoji character on the commit message."
-    echo "  -n --no-display-emoji  Will not display emoji the prompts anywhere."
+    echo "  -N --no-display-emoji  Will not display any emoji the prompt UI."
     echo
     echo "Context Prompt:"
     echo "  A helper information that helps the developer know what the"
     echo "  commit message is related to. Could be a file name or a custom"
-    echo "  tag, for an example."
+    echo "  tag, for an example: \"doc (todo): ...\"."
     echo
     echo "Commit Prompt:"
     echo "  The commit message (duh) that git will use to commit the current"
     echo "  changes. It's recommended that this message has less than 80"
-    echo "  characters length, you need to be specific."
+    echo "  characters length, so you need to be specific."
     echo
     echo "Breaking Prompt:"
     echo "  Will put a '!' character after the name of the commit type."
@@ -60,9 +60,9 @@ while true; do
     echo "  commiting your changes."
     echo
     echo "Description Prompt:  (optional)"
-    echo "  If you've setted the -d or --description flag on the command"
+    echo "  If you've setted the -d or --description flags on the command"
     echo "  this script will ask for another message to put in the commit"
-    echo "  body. Use this to detail what this changes does and warnings."
+    echo "  body. Use this to detail what the changes does and warnings."
     echo
     exit
     ;;
