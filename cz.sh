@@ -27,7 +27,7 @@ while true; do
   case "${1}" in
   "-h" | "--help")
     echo
-    echo "${BASH_SOURCE[0]} - v2.8.5"
+    echo "${BASH_SOURCE[0]} - v2.8.6"
     echo
     echo "I was anoyed that the cz-emoji tool was written in Javascript"
     echo "and depends on NPM, PNPM or whatever you use to manage your node"
@@ -136,7 +136,7 @@ printf " \033[0;32m$\033[0m "
 read -r ri_contextstr
 echo
 
-printf "message: \033[0;32m******************************************************\033[0;33m***************\033[0;31m*****\n"
+printf "message: \033[0;32m*********************************************\033[0;33m***************\033[0;31m***********\n"
 printf " \033[0;32m$\033[0m "
 read -r ri_messagestr
 echo
