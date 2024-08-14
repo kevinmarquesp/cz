@@ -7,8 +7,8 @@
 OPTIONS="h,a,d,j:Nn"
 LONG_OPTIONS="help,ammend,description,json:,no-display-emoji,no-emoji"
 
-eval -- set -- $(getopt --name "${BASH_SOURCE}" --options "${OPTIONS}" \
-						--longoptions "${LONG_OPTIONS}" -- "${@}")
+eval -- set -- "$(getopt --name "${BASH_SOURCE[0]}" --options "${OPTIONS}" \
+  --longoptions "${LONG_OPTIONS}" -- "${@}")"
 unset OPTIONS LONG_OPTIONS
 
 ## OPTIONS SETUP
@@ -23,81 +23,80 @@ jqcmd_build_fzf_table='.[] | .emoji + "|" + .name + "|" + .description'
 jqcmd_display_selected='"\n" + .emoji + " " + .name + ": " + .description + "\n"'
 jqcmd_gen_prefix_msg='.code + " " + .name'
 
-while true
-do
-	case "${1}" in
-		"-h" | "--help")
-			echo
-			echo "${BASH_SOURCE} - v2.8.4"
-			echo
-			echo "I was anoyed that the cz-emoji tool was written in Javascript"
-			echo "and depends on NPM, PNPM or whatever you use to manage your node"
-			echo "packages, so I made my own commit cittizen script with emoji"
-			echo "support using only bash and some system utilities. Feel free"
-			echo "to contribute at https://github.com/kevinmarquesp/committizen_emoji_sh"
-			echo
-			echo "Command Options:"
-			echo "  -h --help              Displays this help message."
-			echo "  -a --ammend            Ammends the commit to the last one"
-			echo "  -d --description       Ask for a longer description after commit"
-			echo "  -j --json [PATH]       Path to the types.json file with the commit types."
-			echo "                           (Current setted as ${types_json})"
-			echo "  -n --no-emoji          Disable the emoji character on the commit message."
-			echo "  -n --no-display-emoji  Will not display emoji the prompts anywhere."
-			echo
-			echo "Context Prompt:"
-			echo "  A helper information that helps the developer know what the"
-			echo "  commit message is related to. Could be a file name or a custom"
-			echo "  tag, for an example."
-			echo
-			echo "Commit Prompt:"
-			echo "  The commit message (duh) that git will use to commit the current"
-			echo "  changes. It's recommended that this message has less than 80"
-			echo "  characters length, you need to be specific."
-			echo
-			echo "Breaking Prompt:"
-			echo "  Will put a '!' character after the name of the commit type."
-			echo "  Use if the project doens't compile/work at the moment you're"
-			echo "  commiting your changes."
-			echo
-			echo "Description Prompt:  (optional)"
-			echo "  If you've setted the -d or --description flag on the command"
-			echo "  this script will ask for another message to put in the commit"
-			echo "  body. Use this to detail what this changes does and warnings."
-			echo
-			exit
-		;;
+while true; do
+  case "${1}" in
+  "-h" | "--help")
+    echo
+    echo "${BASH_SOURCE[0]} - v2.8.5"
+    echo
+    echo "I was anoyed that the cz-emoji tool was written in Javascript"
+    echo "and depends on NPM, PNPM or whatever you use to manage your node"
+    echo "packages, so I made my own commit cittizen script with emoji"
+    echo "support using only bash and some system utilities. Feel free"
+    echo "to contribute at https://github.com/kevinmarquesp/committizen_emoji_sh"
+    echo
+    echo "Command Options:"
+    echo "  -h --help              Displays this help message."
+    echo "  -a --ammend            Ammends the commit to the last one"
+    echo "  -d --description       Ask for a longer description after commit"
+    echo "  -j --json [PATH]       Path to the types.json file with the commit types."
+    echo "                           (Current setted as ${types_json})"
+    echo "  -n --no-emoji          Disable the emoji character on the commit message."
+    echo "  -n --no-display-emoji  Will not display emoji the prompts anywhere."
+    echo
+    echo "Context Prompt:"
+    echo "  A helper information that helps the developer know what the"
+    echo "  commit message is related to. Could be a file name or a custom"
+    echo "  tag, for an example."
+    echo
+    echo "Commit Prompt:"
+    echo "  The commit message (duh) that git will use to commit the current"
+    echo "  changes. It's recommended that this message has less than 80"
+    echo "  characters length, you need to be specific."
+    echo
+    echo "Breaking Prompt:"
+    echo "  Will put a '!' character after the name of the commit type."
+    echo "  Use if the project doens't compile/work at the moment you're"
+    echo "  commiting your changes."
+    echo
+    echo "Description Prompt:  (optional)"
+    echo "  If you've setted the -d or --description flag on the command"
+    echo "  this script will ask for another message to put in the commit"
+    echo "  body. Use this to detail what this changes does and warnings."
+    echo
+    exit
+    ;;
 
-		"-a" | "--amend")
-			is_ammend=1
-			shift
-		;;
+  "-a" | "--amend")
+    is_ammend=1
+    shift
+    ;;
 
-		"-d" | "--description")
-			is_description=1
-			shift
-		;;
+  "-d" | "--description")
+    is_description=1
+    shift
+    ;;
 
-		"-j" | "--json")
-			types_json="${2}"
-			shift 2
-		;;
+  "-j" | "--json")
+    types_json="${2}"
+    shift 2
+    ;;
 
-		"-N" | "--no-display-emoji")
-			jqcmd_build_fzf_table='.[] | .name+"|"+.description'
-			jqcmd_display_selected='"\n" + .name + ": " + .description + "\n"'
-			shift
-		;;
+  "-N" | "--no-display-emoji")
+    jqcmd_build_fzf_table='.[] | .name+"|"+.description'
+    jqcmd_display_selected='"\n" + .name + ": " + .description + "\n"'
+    shift
+    ;;
 
-		"-n" | "--no-emoji")
-			jqcmd_gen_prefix_msg='.name'
-			shift
-		;;
+  "-n" | "--no-emoji")
+    jqcmd_gen_prefix_msg='.name'
+    shift
+    ;;
 
-		"--")
-			break
-		;;
-	esac
+  "--")
+    break
+    ;;
+  esac
 done
 
 ## SCRIPT BODY
@@ -109,74 +108,73 @@ done
 shopt -s expand_aliases
 set -e
 
-[ -e "${HOME}/.bashrc" ] && . "${HOME}/.bashrc"
-[ -e "${HOME}/.bash_aliases" ] && . "${HOME}/.bash_aliases"
-[ -e "${HOME}/.aliasrc" ] && . "${HOME}/.aliasrc"
+[ -e "${HOME}/.bashrc" ] && source "${HOME}/.bashrc"
+[ -e "${HOME}/.bash_aliases" ] && source "${HOME}/.bash_aliases"
+[ -e "${HOME}/.aliasrc" ] && source "${HOME}/.aliasrc"
 
-if [ ! -e "${types_json}" ]
-then
-	printf "\n\033[0;31m[ERROR]\033[0m Could not find %s\n\n" "${types_json}"
-	exit 1
+if [ ! -e "${types_json}" ]; then
+  printf "\n\033[0;31m[ERROR]\033[0m Could not find %s\n\n" "${types_json}"
+  exit 1
 fi
 
 type_idx=$(jq "${jqcmd_build_fzf_table}" "${types_json}" |
-	nl -v 0 |
-	column -ts "|" |  #convert the lines into a text table
-	sed 's/"//g' |  #remove the " characters generated by the column command
-	fzf |
-	sed 's/^ *\([0-9]*\).*$/\1/')  #remove everything, but the index numbers
+  nl -v 0 |
+  column -ts "|" | #convert the lines into a text table
+  sed 's/"//g' |   #remove the " characters generated by the column command
+  fzf |
+  sed 's/^ *\([0-9]*\).*$/\1/') #remove everything, but the index numbers
 
-[ -z "${type_idx}" ] &&  #exit if any type was selected
-	exit
+[ -z "${type_idx}" ] && #exit if any type was selected
+  exit
 
 #this line just display the selected type, just to help the user identify his/her choices...
 printf "\033[0;33m%s\033[0m\n\n" \
-	"$(jq -r ".[${type_idx}] | ${jqcmd_display_selected}" "${types_json}")"
+  "$(jq -r ".[${type_idx}] | ${jqcmd_display_selected}" "${types_json}")"
 
 printf "context: \033[0;36myour commit message is related to what?\n"
 printf " \033[0;32m$\033[0m "
-read ri_contextstr
+read -r ri_contextstr
 echo
 
 printf "message: \033[0;32m******************************************************\033[0;33m***************\033[0;31m*****\n"
 printf " \033[0;32m$\033[0m "
-read ri_messagestr
+read -r ri_messagestr
 echo
 
 printf "\033[0;34mis breaking?\033[0m [y/N] "
-read -N1 ri_is_breaking
+read -rN1 ri_is_breaking
 printf "\n\n"
 
 #if the commit is a breaking one, it will change the jq command to add a ! at the end of the name
 [ "${ri_is_breaking}" = "y" ] || [ "${ri_is_breaking}" = "Y" ] &&
-	jqcmd_gen_prefix_msg="${jqcmd_gen_prefix_msg} + \"!\""
+  jqcmd_gen_prefix_msg="${jqcmd_gen_prefix_msg} + \"!\""
 
-[ -z "${ri_messagestr}" ] &&  #exit the user doesn't specify any commit message
-	exit
+[ -z "${ri_messagestr}" ] && #exit the user doesn't specify any commit message
+  exit
 
-if [ $is_description = 1 ]
-then
-	printf "description: \033[0;36mchange details, explain what this commit does better\n"
-	printf " \033[0;32m$\033[0m "
-	read ri_descriptionstr
-	echo
+if [ $is_description = 1 ]; then
+  printf "description: \033[0;36mchange details, explain what this commit does better\n"
+  printf " \033[0;32m$\033[0m "
+  read -r ri_descriptionstr
+  echo
 fi
 
-description_opt=""
 ammend_opt=""
 context_part=":"
 prefix_part=$(jq -r ".[${type_idx}] | ${jqcmd_gen_prefix_msg}" "${types_json}")
 
 #build the commit options and parts based on the input strings and/or user options
 [ -n "${ri_descriptionstr}" ] &&
-	description_msg="${ri_descriptionstr}"
+  description_msg="${ri_descriptionstr}"
 [ ${is_ammend} = 1 ] &&
-	ammend_opt="--amend"
+  ammend_opt="--amend"
 [ -n "${ri_contextstr}" ] &&
-	context_part=" (${ri_contextstr}):"
+  context_part=" (${ri_contextstr}):"
 
 commit_msg="${prefix_part}${context_part} ${ri_messagestr}"
 
-[ ${is_description} = 1 ] &&
-	git commit ${ammend_opt} -m "${commit_msg}" -m "${description_msg}" ||
-	git commit ${ammend_opt} -m "${commit_msg}"
+if [ ${is_description} = 1 ]; then
+  git commit ${ammend_opt} -m "${commit_msg}" -m "${description_msg}"
+else
+  git commit ${ammend_opt} -m "${commit_msg}"
+fi
