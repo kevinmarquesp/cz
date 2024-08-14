@@ -10,6 +10,8 @@ platform, but I really don't care, just makes the project difficult to setup in
 multiple OSes. So, I made my own Bash script for that. Hope it's helpful for you
 as well :heart:.
 
+https://github.com/user-attachments/assets/292ae53e-4fd7-47e3-9b17-6669705ff201
+
 
 ## Documentation
 
