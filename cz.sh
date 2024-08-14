@@ -27,13 +27,13 @@ while true; do
   case "${1}" in
   "-h" | "--help")
     echo
-    echo "${BASH_SOURCE[0]} - v2.8.6"
+    echo "${BASH_SOURCE[0]} - v2.9.6"
     echo
     echo "I was anoyed that the cz-emoji tool was written in Javascript"
     echo "and depends on NPM, PNPM or whatever you use to manage your node"
     echo "packages, so I made my own commit cittizen script with emoji"
     echo "support using only bash and some system utilities. Feel free"
-    echo "to contribute at https://github.com/kevinmarquesp/committizen_emoji_sh"
+    echo "to contribute at https://github.com/kevinmarquesp/cz"
     echo
     echo "Command Options:"
     echo "  -h --help              Displays this help message."
@@ -131,14 +131,17 @@ type_idx=$(jq "${jqcmd_build_fzf_table}" "${types_json}" |
 printf "\033[0;33m%s\033[0m\n\n" \
   "$(jq -r ".[${type_idx}] | ${jqcmd_display_selected}" "${types_json}")"
 
+function rlwrap_read {
+  rlwrap -p"0;32" -S " \$ " bash -c "read -r input; echo \$input"
+}
+
 printf "context: \033[0;36myour commit message is related to what?\n"
-printf " \033[0;32m$\033[0m "
-read -r ri_contextstr
+ri_contextstr="$(rlwrap_read)"
 echo
 
 printf "message: \033[0;32m*********************************************\033[0;33m***************\033[0;31m***********\n"
 printf " \033[0;32m$\033[0m "
-read -r ri_messagestr
+ri_messagestr="$(rlwrap_read)"
 echo
 
 printf "\033[0;34mis breaking?\033[0m [y/N] "
@@ -155,7 +158,7 @@ printf "\n\n"
 if [ $is_description = 1 ]; then
   printf "description: \033[0;36mchange details, explain what this commit does better\n"
   printf " \033[0;32m$\033[0m "
-  read -r ri_descriptionstr
+  ri_descriptionstr="$(rlwrap_read)"
   echo
 fi
 
