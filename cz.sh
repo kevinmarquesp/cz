@@ -18,7 +18,7 @@ unset OPTIONS LONG_OPTIONS
 
 is_ammend=0
 is_description=0
-types_json="${HOME}/.local/share/committizen_emoji_sh/types.json"
+types_json="${HOME}/.local/share/cz/types.json"
 jqcmd_build_fzf_table='.[] | .emoji + "|" + .name + "|" + .description'
 jqcmd_display_selected='"\n" + .emoji + " " + .name + ": " + .description + "\n"'
 jqcmd_gen_prefix_msg='.code + " " + .name'
@@ -27,7 +27,7 @@ while true; do
   case "${1}" in
   "-h" | "--help")
     echo
-    echo "${BASH_SOURCE[0]} - v2.9.6"
+    echo "${BASH_SOURCE[0]} - v2.9.7"
     echo
     echo "I was anoyed that the cz-emoji tool was written in JavaScript"
     echo "and depends on NPM, PNPM or whatever you use to manage your Node"
